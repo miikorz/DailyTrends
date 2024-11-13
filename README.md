@@ -23,7 +23,7 @@ DailyTrends is an API service built with Node.js, TypeScript, MongoDB, Docker, a
 1. Clone the Repository.
 
 ```bash
-git clone https://github.com/your-username/dailytrends.git
+git clone git@github.com:miikorz/DailyTrends.git
 cd dailytrends
 ```
 
