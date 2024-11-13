@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon src/server.ts",
+    "test": "jest",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up --watch",
+    "docker:down": "docker-compose down",
+    "docker:restart": "docker-compose down && docker-compose up --build"
   },
   "keywords": [],
   "author": "",
