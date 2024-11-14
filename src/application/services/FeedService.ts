@@ -9,7 +9,7 @@ export class FeedService {
     return await this.feedRepository.findAll();
   }
 
-  async createFeed(feedObject: { title: string; subtitle: string; description: string; author: string; link: string; portrait: string; newsletter: string }) {
+  async createFeed(feedObject: { title: string; subtitle: string | null; description: string; author: string; link: string; portrait: string | null; newsletter: string }) {
     return await this.feedRepository.create(feedObject);
   }
 
