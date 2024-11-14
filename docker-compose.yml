@@ -4,6 +4,9 @@ services:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/feed-db
     depends_on:
       - mongo
     env_file:

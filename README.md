@@ -37,7 +37,7 @@ npm install
 
 ```bash
 PORT=3000
-MONGO_URI=mongodb://mongo:27017/dailytrends
+MONGO_URI=mongodb://localhost:27017/feed-db
 ```
 
 The API will be available at http://localhost:3000.
@@ -78,7 +78,7 @@ npm test
 - **GET** `/feed/:id`
 - **Response**: Returns a JSON object of the news item with the specified ID.
 
-  3.** Update feeds by ID**
+3. ** Update feeds by ID**
 
 - **PUT** `/feed/:id`
 - **Request Body**: Only the fields to be updated
@@ -95,7 +95,7 @@ npm test
 }
 ```
 
-4.** Delete feeds by ID**
+4. ** Delete feeds by ID**
 
 - **DELETE** `/feed/:id`
 
