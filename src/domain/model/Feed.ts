@@ -1,5 +1,4 @@
 export interface Feed {
-  id: string,
   title: string,
   subtitle: string | null,
   description: string,

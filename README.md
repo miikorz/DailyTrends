@@ -58,7 +58,7 @@ npm test
 
 1.** Create feeds**
 
-- **POST** `/feeds`
+- **POST** `/feed`
 - **Request Body**:
 
 ```json

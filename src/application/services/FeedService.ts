@@ -5,6 +5,10 @@ import { FeedRepositoryInterface } from '../../infrastructure/repositories/feed/
 export class FeedService {
   constructor(private feedRepository: FeedRepositoryInterface) {}
 
+  async getAllFeeds() {
+    return await this.feedRepository.findAll();
+  }
+
   async createFeed(feedObject: { title: string; subtitle: string; description: string; author: string; link: string; portrait: string; newsletter: string }) {
     return await this.feedRepository.create(feedObject);
   }

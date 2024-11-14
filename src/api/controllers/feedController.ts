@@ -20,3 +20,15 @@ export const getFeed = async (
     res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
   }
 };
+
+export const getAllFeeds = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const feedData = await feedService.getAllFeeds();
+    res.status(200).json({ data: {feedData}, error: null });
+  } catch (error) {
+    res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
+  }
+};
