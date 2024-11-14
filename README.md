@@ -56,7 +56,7 @@ npm test
 
 ## API Endpoints
 
-1.** Create feeds**
+1.**Create feeds**
 
 - **POST** `/feed`
 - **Request Body**:
@@ -78,7 +78,7 @@ npm test
 - **GET** `/feed/:id`
 - **Response**: Returns a JSON object of the news item with the specified ID.
 
-3. ** Update feeds by ID**
+3. **Update feeds by ID**
 
 - **PUT** `/feed/:id`
 - **Request Body**: Only the fields to be updated
@@ -95,11 +95,11 @@ npm test
 }
 ```
 
-4. ** Delete feeds by ID**
+4. **Delete feeds by ID**
 
 - **DELETE** `/feed/:id`
 
-  5.** List of feeds**
+  5.**List of feeds**
 
 - **GET** `/feed`
   Fetches the top 5 latest news articles from El País and El Mundo main pages (and the manually ones added) using web scraping.
