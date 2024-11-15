@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { SERVER_STATUS } from '../apiConstants';
+import { SERVER_CODES, SERVER_MESSAGES, SERVER_STATUS } from '../apiConstants';
 import { FeedService } from '../../application/services/FeedService';
 import { FeedRepository } from '../../infrastructure/repositories/feed/FeedRepository';
 import { Feed } from '../../domain/model/Feed';
@@ -7,7 +7,6 @@ import { ElPaisScrapperRepository } from '../../infrastructure/repositories/scra
 import { ElMundoScrapperRepository } from '../../infrastructure/repositories/scrapper/elmundo/ElMundoScrapperRepository';
 import { ScrapperRepositoryInterface } from '../../infrastructure/repositories/scrapper/ScrapperRepositoryInterface';
 
-// TODO: where to inject this?
 const feedRepository = new FeedRepository();
 const scrappers: ScrapperRepositoryInterface[] = [new ElPaisScrapperRepository(), new ElMundoScrapperRepository()];
 const feedService = new FeedService(feedRepository, scrappers);
@@ -18,9 +17,9 @@ export const getAllFeeds = async (
 ): Promise<void> => {
   try {
     const feedData = await feedService.getAllFeeds();
-    res.status(200).json({ data: feedData, error: null });
+    res.status(SERVER_CODES.REQUEST_SUCCESSFUL).json({ data: feedData, error: null });
   } catch (error) {
-    res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR]}, data: null });
   }
 };
 
@@ -32,9 +31,14 @@ export const getFeed = async (
 
   try {
     const feedData = await feedService.getFeedById(id);
-    res.status(200).json({ data: feedData, error: null });
-  } catch (error) {
-    res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
+    if (!feedData) {
+      res.status(SERVER_CODES.NOT_FOUND).json({ error: { code: SERVER_STATUS.NOT_FOUND, message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND]}, data: null });
+    } else {
+      res.status(SERVER_CODES.REQUEST_SUCCESSFUL).json({ data: feedData, error: null });
+    }
+  } catch (error: any) {
+    console.log(error.reason.toString());
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: error.reason.toString()}, data: null });
   }
 };
 
@@ -46,9 +50,9 @@ export const createFeed = async (
 
   try {
     const feedData = await feedService.createFeed({ title, description, author, link, portrait, newsletter });
-    res.status(200).json({ data: feedData, error: null });
+    res.status(SERVER_CODES.REQUEST_SUCCESSFUL).json({ data: feedData, error: null });
   } catch (error) {
-    res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR]}, data: null });
   }
 };
 
@@ -61,9 +65,13 @@ export const updateFeed = async (
 
   try {
     const feedData = await feedService.updateFeed(id, { title, description, author, link, portrait, newsletter });
-    res.status(200).json({ data: feedData, error: null });
+    if (!feedData) {
+      res.status(SERVER_CODES.NOT_FOUND).json({ error: { code: SERVER_STATUS.NOT_FOUND, message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND]}, data: null });
+    } else {
+      res.status(SERVER_CODES.REQUEST_SUCCESSFUL).json({ data: feedData, error: null });
+    }
   } catch (error) {
-    res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR]}, data: null });
   }
 }
 
@@ -75,8 +83,8 @@ export const deleteFeed = async (
 
   try {
     await feedService.deleteFeed(id);
-    res.status(200).json({ data: "Feed deleted successfully", error: null });
+    res.status(SERVER_CODES.DELETED_SUCCESSFULLY).json({ data: SERVER_MESSAGES.DELETED, error: null });
   } catch (error) {
-    res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR]}, data: null });
   }
 }
