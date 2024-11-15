@@ -9,7 +9,7 @@ export class FeedRepository implements FeedRepositoryInterface {
     return feeds.map((feed) => ({ ...feed }) as Feed);
   }
 
-  async create(feed: { title: string; subtitle: string | null; description: string; author: string; link: string; portrait: string | null; newsletter: string }): Promise<Feed> {
+  async create(feed: { title: string; description: string; author: string; link: string; portrait: string | null; newsletter: string }): Promise<Feed> {
     const createdFeed = await FeedModel.create(feed);
 
     return createdFeed.toObject() as unknown as Feed;

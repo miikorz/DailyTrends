@@ -64,7 +64,6 @@ npm test
 ```json
 {
   "title": "Sample News",
-  "subtitle": "A brief subtitle",
   "description": "Detailed description of the news",
   "author": "Author Name",
   "link": "https://example.com",
@@ -86,7 +85,6 @@ npm test
 ```json
 {
   "title": "Sample News",
-  "subtitle": "A brief subtitle",
   "description": "Detailed description of the news",
   "author": "Author Name",
   "link": "https://example.com",
