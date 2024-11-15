@@ -1,15 +1,25 @@
 import { Feed } from '../../domain/model/Feed';
 import { FeedRepositoryInterface } from '../../infrastructure/repositories/feed/FeedRepositoryInterface';
+import { ScrapperRepositoryInterface } from '../../infrastructure/repositories/scrapper/ScrapperRepositoryInterface';
+import { ScrapperService } from './ScrapperService';
 
 // TODO: type what services return
 export class FeedService {
-  constructor(private feedRepository: FeedRepositoryInterface) {}
+  private scrapperService;
+
+  constructor(private feedRepository: FeedRepositoryInterface, scrapperRepository: ScrapperRepositoryInterface) {
+    this.feedRepository = feedRepository;
+    this.scrapperService = new ScrapperService(scrapperRepository);
+  }
 
   async getAllFeeds() {
+    const scrappedFeeds = await this.scrapperService.getTopNews();
+    console.log({scrappedFeeds});
+    
     return await this.feedRepository.findAll();
   }
 
-  async createFeed(feedObject: { title: string; subtitle: string | null; description: string; author: string; link: string; portrait: string | null; newsletter: string }) {
+  async createFeed(feedObject: { title: string; description: string; author: string; link: string; portrait: string | null; newsletter: string }) {
     return await this.feedRepository.create(feedObject);
   }
 

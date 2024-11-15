@@ -3,10 +3,12 @@ import { SERVER_STATUS } from '../apiConstants';
 import { FeedService } from '../../application/services/FeedService';
 import { FeedRepository } from '../../infrastructure/repositories/feed/FeedRepository';
 import { Feed } from '../../domain/model/Feed';
+import { ElPaisScrapperRepository } from '../../infrastructure/repositories/scrapper/elpais/ElPaisScrapperRepository';
 
 // TODO: where to inject this?
 const feedRepository = new FeedRepository();
-const feedService = new FeedService(feedRepository);
+const scrapperRepository = new ElPaisScrapperRepository();
+const feedService = new FeedService(feedRepository, scrapperRepository);
 
 export const getAllFeeds = async (
   req: Request,
@@ -38,10 +40,10 @@ export const createFeed = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const { title, subtitle, description, author, link, portrait, newsletter }: Feed = req.body;
+  const { title, description, author, link, portrait, newsletter }: Feed = req.body;
 
   try {
-    const feedData = await feedService.createFeed({ title, subtitle, description, author, link, portrait, newsletter });
+    const feedData = await feedService.createFeed({ title, description, author, link, portrait, newsletter });
     res.status(200).json({ data: feedData, error: null });
   } catch (error) {
     res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
@@ -53,10 +55,10 @@ export const updateFeed = async (
   res: Response,
 ): Promise<void> => {
   const { id } = req.params;
-  const { title, subtitle, description, author, link, portrait, newsletter }: Feed = req.body;
+  const { title, description, author, link, portrait, newsletter }: Feed = req.body;
 
   try {
-    const feedData = await feedService.updateFeed(id, { title, subtitle, description, author, link, portrait, newsletter });
+    const feedData = await feedService.updateFeed(id, { title, description, author, link, portrait, newsletter });
     res.status(200).json({ data: feedData, error: null });
   } catch (error) {
     res.status(500).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: "Internal Server Error"}, data: null });
