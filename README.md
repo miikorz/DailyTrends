@@ -18,7 +18,7 @@ DailyTrends is an API service built with Node.js, TypeScript, MongoDB, Docker, a
 - Docker and Docker Compose
 - MongoDB (if running locally)
 
-### Setting Up the Project
+### Running the Project
 
 1. Clone the Repository.
 
@@ -27,28 +27,15 @@ git clone git@github.com:miikorz/DailyTrends.git
 cd dailytrends
 ```
 
-2. Install Dependencies.
-
-```bash
-npm install
-```
-
-3. Create a .env File: Create a .env file in the root directory with the following variables:
-
-```bash
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/feed-db
-```
-
-The API will be available at http://localhost:3000.
-
-4. Run with Docker: Build and start the application and MongoDB container using Docker Compose.
+2. Run with Docker: Build and start the application and MongoDB container using Docker Compose.
 
 ```bash
 docker-compose up --build
 ```
 
-5. Run Tests: To run tests with Jest:
+The API will be available at http://localhost:3000.
+
+3. Run Tests: To run tests with Jest:
 
 ```bash
 npm test
@@ -100,7 +87,7 @@ npm test
   5.**List of feeds**
 
 - **GET** `/feed`
-  Fetches the top 5 latest news articles from El País and El Mundo main pages (and the manually ones added) using web scraping.
+  Fetches the top 5 latest news articles from El País and El Mundo main pages (and the manually ones added) using web scraping and return them along with the manually stored news.
 
 ## Future Improvements
 
