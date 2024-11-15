@@ -4,10 +4,12 @@ import { FeedService } from '../../application/services/FeedService';
 import { FeedRepository } from '../../infrastructure/repositories/feed/FeedRepository';
 import { Feed } from '../../domain/model/Feed';
 import { ElPaisScrapperRepository } from '../../infrastructure/repositories/scrapper/elpais/ElPaisScrapperRepository';
+import { ElMundoScrapperRepository } from '../../infrastructure/repositories/scrapper/elmundo/ElMundoScrapperRepository';
 
 // TODO: where to inject this?
 const feedRepository = new FeedRepository();
-const scrapperRepository = new ElPaisScrapperRepository();
+// const scrapperRepository = new ElPaisScrapperRepository();
+const scrapperRepository = new ElMundoScrapperRepository();
 const feedService = new FeedService(feedRepository, scrapperRepository);
 
 export const getAllFeeds = async (

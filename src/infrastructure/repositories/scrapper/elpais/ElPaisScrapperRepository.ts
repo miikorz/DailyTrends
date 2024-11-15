@@ -3,6 +3,7 @@ import { Feed, FeedDTO } from "../../../../domain/model/Feed";
 import { ScrapperRepositoryInterface } from "../ScrapperRepositoryInterface";
 
 const newsletterUrl: string = "https://elpais.com/";
+const newsletterName: string = "El País";
 
 export class ElPaisScrapperRepository implements ScrapperRepositoryInterface {
     async getTopNews(): Promise<Feed[]> {
@@ -20,8 +21,7 @@ export class ElPaisScrapperRepository implements ScrapperRepositoryInterface {
                 const portrait: string = $(el).find("header a").first().attr("href") || "";
                 const link: string = $(el).find("img.c_m_e._re.lazyload.a_m-h").attr("src") || "";
 
-                const feed: Feed = new FeedDTO(title, description, author, portrait, link, newsletterUrl).toObject();
-                console.log({ feed });
+                const feed: Feed = new FeedDTO(title, description, author, portrait, link, newsletterName).toObject();
                 feeds.push(feed);
             }
         });
