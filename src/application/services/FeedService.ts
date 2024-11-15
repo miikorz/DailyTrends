@@ -5,15 +5,18 @@ import { ScrapperService } from './ScrapperService';
 
 // TODO: type what services return
 export class FeedService {
-  private scrapperService;
 
-  constructor(private feedRepository: FeedRepositoryInterface, scrapperRepository: ScrapperRepositoryInterface) {
-    this.feedRepository = feedRepository;
-    this.scrapperService = new ScrapperService(scrapperRepository);
-  }
+  constructor(private feedRepository: FeedRepositoryInterface, private scrappers: ScrapperRepositoryInterface[]) {}
 
   async getAllFeeds() {
-    const scrappedFeeds = await this.scrapperService.getTopNews();
+    const scrappedFeeds: Feed[] = [];
+
+    for (const scrapper of this.scrappers) {
+      const scrapperService = new ScrapperService(scrapper);
+      const justScrappedFeeds = await scrapperService.getTopNews();
+      scrappedFeeds.push(...justScrappedFeeds);
+    }
+
     await this.feedRepository.saveScrappedFeeds(scrappedFeeds);
     
     return await this.feedRepository.findAll();
