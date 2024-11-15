@@ -4,6 +4,19 @@ import { FeedRepositoryInterface } from './FeedRepositoryInterface';
 
 export class FeedRepository implements FeedRepositoryInterface {
 
+ async saveScrappedFeeds(feeds: Feed[]): Promise<Feed[]> {
+    const existingFeeds = await FeedModel.find({ link: { $in: feeds.map(feed => feed.link) } }).lean();
+    const existingLinks = new Set(existingFeeds.map(feed => feed.link));
+    const newFeeds: Feed[] = feeds.filter(feed => !existingLinks.has(feed.link));
+    
+    if (newFeeds.length > 0) {
+      await FeedModel.insertMany(newFeeds);
+    }
+    console.log({newFeeds});
+
+    return newFeeds;
+  }
+
   async findAll(): Promise<Feed[]> {
     const feeds = await FeedModel.find().lean();
     return feeds.map((feed) => ({ ...feed }) as Feed);

@@ -14,7 +14,7 @@ export class FeedService {
 
   async getAllFeeds() {
     const scrappedFeeds = await this.scrapperService.getTopNews();
-    console.log({scrappedFeeds});
+    await this.feedRepository.saveScrappedFeeds(scrappedFeeds);
     
     return await this.feedRepository.findAll();
   }

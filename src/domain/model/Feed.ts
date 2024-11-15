@@ -20,7 +20,7 @@ export class FeedDTO implements Feed {
         description: string,
         author: string,
         link: string,
-        portrait: string,
+        portrait: string | null,
         newsletter: string
     ) {
         this.title = title;
