@@ -8,6 +8,7 @@ DailyTrends is an API service built with Node.js, TypeScript, MongoDB, Docker, a
 - [Installation and Setup](#installation-and-setup)
 - [API Endpoints](#api-endpoints)
 - [Future Improvements](#future-improvements)
+- [DailyTrends Service Diagram](#dailyTrends-service-diagram)
 
 ## Technologies Used
 
@@ -121,6 +122,6 @@ In the future, the following improvements could be implemented:
 6.  **CI/CD Pipeline**:
     Set up a CI/CD pipeline for automated testing, linting, and deployment of the application on code pushes.
 
-## API DIAGRAM
+## DailyTrends Service Diagram
 
 ![alt text](https://github.com/miikorz/DailyTrends/blob/main/diagram-dailytrends.png?raw=true)
