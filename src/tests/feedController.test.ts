@@ -74,6 +74,14 @@ describe('FeedController', () => {
 
       expect(response.status).toBe(SERVER_CODES.REQUEST_SUCCESSFUL);
     });
+
+    it('should return 400 if missing required fields', async () => {
+      feedMock = { title: 'New Feed' } as Feed;
+
+      const response = await request(app).post('/feed').send(feedMock).expect(400, {data: null, error: {message: SERVER_MESSAGES.BAD_REQUEST, code: SERVER_STATUS.BAD_REQUEST}});
+
+      expect(response.status).toBe(SERVER_CODES.BAD_REQUEST);
+    });
   });
 
   describe('updateFeed', () => {

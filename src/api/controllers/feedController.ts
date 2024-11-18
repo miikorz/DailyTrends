@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { SERVER_CODES, SERVER_MESSAGES, SERVER_STATUS } from '../apiConstants';
 import { FeedService } from '../../application/services/FeedService';
 import { FeedRepository } from '../../infrastructure/repositories/feed/FeedRepository';
-import { Feed } from '../../domain/model/Feed';
+import { Feed, FeedDTO } from '../../domain/model/Feed';
 import { ElPaisScrapperRepository } from '../../infrastructure/repositories/scrapper/elpais/ElPaisScrapperRepository';
 import { ElMundoScrapperRepository } from '../../infrastructure/repositories/scrapper/elmundo/ElMundoScrapperRepository';
 import { ScrapperRepositoryInterface } from '../../infrastructure/repositories/scrapper/ScrapperRepositoryInterface';
@@ -49,8 +49,13 @@ export const createFeed = async (
   const { title, description, author, link, portrait, newsletter }: Feed = req.body;
 
   try {
-    const feedData = await feedService.createFeed({ title, description, author, link, portrait, newsletter });
-    res.status(SERVER_CODES.REQUEST_SUCCESSFUL).json({ data: feedData, error: null });
+    // Soft request validation
+    if (title && description && author && link && newsletter) {
+      const feedData = await feedService.createFeed({ title, description, author, link, portrait, newsletter });
+      res.status(SERVER_CODES.REQUEST_SUCCESSFUL).json({ data: feedData, error: null });
+    } else {
+      res.status(SERVER_CODES.BAD_REQUEST).json({ error: { code: SERVER_STATUS.BAD_REQUEST, message: SERVER_MESSAGES[SERVER_STATUS.BAD_REQUEST]}, data: null });
+    }
   } catch (error) {
     res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR]}, data: null });
   }
