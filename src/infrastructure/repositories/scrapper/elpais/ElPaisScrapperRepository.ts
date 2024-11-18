@@ -18,10 +18,10 @@ export class ElPaisScrapperRepository implements ScrapperRepositoryInterface {
                 const title: string = $(el).find("h2").text();
                 const author: string = $(el).find("a.c_a_a").first().text();
                 const description: string = $(el).find("p.c_d").text();
-                const portrait: string = $(el).find("header a").first().attr("href") || "";
-                const link: string = $(el).find("img.c_m_e._re.lazyload.a_m-h").attr("src") || "";
+                const link: string = $(el).find("header a").first().attr("href") || "";
+                const portrait: string = $(el).find("img.c_m_e._re.lazyload.a_m-h").attr("src") || "";
 
-                const feed: Feed = new FeedDTO(title, description, author, portrait, link, newsletterName).toObject();
+                const feed: Feed = new FeedDTO(title, description, author, link, portrait, newsletterName).toObject();
                 feeds.push(feed);
             }
         });

@@ -82,8 +82,12 @@ export const deleteFeed = async (
   const { id } = req.params;
 
   try {
-    await feedService.deleteFeed(id);
-    res.status(SERVER_CODES.DELETED_SUCCESSFULLY).json({ data: SERVER_MESSAGES.DELETED, error: null });
+    const feedData = await feedService.deleteFeed(id);
+    if (!feedData) {
+      res.status(SERVER_CODES.NOT_FOUND).json({ error: { code: SERVER_STATUS.NOT_FOUND, message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND]}, data: null });
+    } else {
+      res.status(SERVER_CODES.DELETED_SUCCESSFULLY).json({ data: SERVER_MESSAGES.DELETED, error: null });
+    }
   } catch (error) {
     res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR]}, data: null });
   }

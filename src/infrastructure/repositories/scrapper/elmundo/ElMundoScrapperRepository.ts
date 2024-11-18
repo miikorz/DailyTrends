@@ -17,7 +17,7 @@ export class ElMundoScrapperRepository implements ScrapperRepositoryInterface {
         $("article").each((i, el) => {
             if (feedCount < feedLimit) {
                 const link: string = $(el).find("header a").first().attr("href") || "";
-                // * If there is no link we skip this feed since its only a video
+                // * If there is no link we skip this feed since its only a video or not a full new
                 if (!link) return;
 
                 const title: string = $(el).find("h2").text();

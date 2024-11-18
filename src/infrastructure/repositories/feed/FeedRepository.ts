@@ -12,20 +12,19 @@ export class FeedRepository implements FeedRepositoryInterface {
     if (newFeeds.length > 0) {
       await FeedModel.insertMany(newFeeds);
     }
-    console.log({newFeeds});
 
     return newFeeds;
   }
 
   async findAll(): Promise<Feed[]> {
     const feeds = await FeedModel.find().lean();
-    return feeds.map((feed) => ({ ...feed }) as Feed);
+    return { ...feeds } as Feed[];
   }
 
   async create(feed: { title: string; description: string; author: string; link: string; portrait: string | null; newsletter: string }): Promise<Feed> {
     const createdFeed = await FeedModel.create(feed);
 
-    return createdFeed.toObject() as unknown as Feed;
+    return createdFeed.toObject() as Feed;
   }
 
   async findById(id: string): Promise<Feed | null> {
@@ -35,7 +34,6 @@ export class FeedRepository implements FeedRepositoryInterface {
       return { ...feed } as Feed;
     }
 
-    // TODO: return 404 error, here or in controller
     return null;
   }
 
@@ -46,18 +44,16 @@ export class FeedRepository implements FeedRepositoryInterface {
       return { ...updatedFeed } as Feed;
     }
 
-    // TODO: return 404 error, here or in controller
     return null;
   }
 
-  async delete(id: string): Promise<null> {
+  async delete(id: string): Promise<Feed | null> {
     const deletedFeed = await FeedModel.findByIdAndDelete(id);
-    
-    if (deletedFeed) {
-      return null;
-    }
 
-    // TODO: return 404 error, here or in controller
+    if (deletedFeed) {
+      return { ...deletedFeed } as Feed;
+    }
+    
     return null;
   }
 }

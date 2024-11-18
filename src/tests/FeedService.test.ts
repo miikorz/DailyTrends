@@ -24,7 +24,7 @@ describe('FeedService', () => {
         scrappers = [
             {
                 getTopNews: jest.fn(),
-            } as any,
+            },
         ];
 
         feedService = new FeedService(feedRepository, scrappers);
@@ -103,22 +103,24 @@ describe('FeedService', () => {
     });
 
     describe('deleteFeed', () => {
-        // it('should delete a feed by id', async () => {
-        //     feedRepository.delete.mockResolvedValue(true);
+        it('should delete a feed by id', async () => {
+            const feed = { title: "Deleted feed" } as Partial<Feed>;
+            const deletedFeed = { id: "1", ...feed } as Feed;
+            feedRepository.delete.mockResolvedValue(deletedFeed);
 
-        //     const result = await feedService.deleteFeed('1');
+            const result = await feedService.deleteFeed('1');
 
-        //     expect(feedRepository.delete).toHaveBeenCalledWith('1');
-        //     expect(result).toBe(true);
-        // });
+            expect(feedRepository.delete).toHaveBeenCalledWith('1');
+            expect(result).toBe(deletedFeed);
+        });
 
-        // it('should return false if feed not found', async () => {
-        //     feedRepository.delete.mockResolvedValue(false);
+        it('should return null if feed not found', async () => {
+            feedRepository.delete.mockResolvedValue(null);
 
-        //     const result = await feedService.deleteFeed('1');
+            const result = await feedService.deleteFeed('non existing id');
 
-        //     expect(feedRepository.delete).toHaveBeenCalledWith('1');
-        //     expect(result).toBe(false);
-        // });
+            expect(feedRepository.delete).toHaveBeenCalledWith('non existing id');
+            expect(result).toBe(null);
+        });
     });
 });
