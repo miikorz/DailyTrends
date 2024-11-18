@@ -8,6 +8,7 @@ import { ElMundoScrapperRepository } from '../../infrastructure/repositories/scr
 import { ScrapperRepositoryInterface } from '../../infrastructure/repositories/scrapper/ScrapperRepositoryInterface';
 
 const feedRepository = new FeedRepository();
+// * Scrappers could be injected from a configuration file
 const scrappers: ScrapperRepositoryInterface[] = [new ElPaisScrapperRepository(), new ElMundoScrapperRepository()];
 const feedService = new FeedService(feedRepository, scrappers);
 

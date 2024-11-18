@@ -7,6 +7,7 @@ const router = Router();
  * @route GET /feed/:id
  * @desc Get a feed by its id
  * @returns {object} 200 - An object with the feed data
+ * @returns {object} 404 - An object with the error message
  * @returns {object} 500 - An object with the error message
  */
 router.get('/feed/:id', getFeed);
@@ -31,6 +32,7 @@ router.post('/feed', createFeed);
  * @route PUT /feed/:id
  * @desc Update a feed by its id
  * @returns {object} 200 - An object with the feed data
+ * @returns {object} 404 - An object with the error message
  * @returns {object} 500 - An object with the error message
  */
 router.put('/feed/:id', updateFeed);
@@ -38,7 +40,8 @@ router.put('/feed/:id', updateFeed);
 /**
  * @route DELETE /feed/:id
  * @desc Delete a feed by its id
- * @returns {object} 200
+ * @returns {object} 204
+ * @returns {object} 404 - An object with the error message
  * @returns {object} 500 - An object with the error message
  */
 
