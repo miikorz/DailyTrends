@@ -111,3 +111,7 @@ In the future, the following improvements could be implemented:
 
 6.  **CI/CD Pipeline**:
     Set up a CI/CD pipeline for automated testing, linting, and deployment of the application on code pushes.
+
+## API DIAGRAM
+
+![alt text](https://github.com/miikorz/DailyTrends/blob/main/diagram-dailytrends.png?raw=true)
