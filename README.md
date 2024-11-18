@@ -17,6 +17,7 @@ DailyTrends is an API service built with Node.js, TypeScript, MongoDB, Docker, a
 - Node.js (latest LTS version)
 - Docker and Docker Compose
 - MongoDB (if running locally)
+- SuperTest (for integration/API testing)
 
 ### Running the Project
 
@@ -43,7 +44,7 @@ npm test
 
 ## API Endpoints
 
-1.**Create feeds**
+1. **Create feeds**
 
 - **POST** `/feed`
 - **Request Body**:
@@ -84,7 +85,7 @@ npm test
 
 - **DELETE** `/feed/:id`
 
-  5.**List of feeds**
+5. **List of feeds**
 
 - **GET** `/feed`
   Fetches the top 5 latest news articles from El País and El Mundo main pages (and the manually ones added) using web scraping and return them along with the manually stored news.
@@ -93,7 +94,7 @@ npm test
 
 In the future, the following improvements could be implemented:
 
-1.  **Authentication and Authorizatio**n:
+1.  **Authentication and Authorization**:
     Add JWT-based authentication to restrict access to certain endpoints, e.g., allow only authorized users to create, update, or delete news.
 
 2.  **Cache Management**:
@@ -105,11 +106,8 @@ In the future, the following improvements could be implemented:
 4.  **Rate Limiting and Throttling**:
     Limit the number of requests from each user to avoid overloading the scraping functionality and external site requests.
 
-5.  **Extended Testing**:
-    Include integration tests to cover more complex use cases and edge cases.
-
-6.  **Data Validation and Sanitization**:
+5.  **Data Validation and Sanitization**:
     Use a library like Joi or class-validator to ensure that data input conforms to the expected schema and is secure.
 
-7.  **CI/CD Pipeline**:
+6.  **CI/CD Pipeline**:
     Set up a CI/CD pipeline for automated testing, linting, and deployment of the application on code pushes.

@@ -38,7 +38,6 @@ export const getFeed = async (
       res.status(SERVER_CODES.REQUEST_SUCCESSFUL).json({ data: feedData, error: null });
     }
   } catch (error: any) {
-    console.log(error.reason.toString());
     res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({ error: { code: SERVER_STATUS.INTERNAL_SERVER_ERROR, message: error.reason.toString()}, data: null });
   }
 };
