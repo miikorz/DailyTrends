@@ -17,8 +17,9 @@ DailyTrends is an API service built with Node.js, TypeScript, MongoDB, Docker, a
 - Express
 - Moongose
 - Jest
-- SuperTest
+- SuperTest (for integration/API testing)
 - Cheerio (in order to scrap easier)
+- Eslint & Prettier (for code formatting)
 
 ## Installation and Setup
 
@@ -27,7 +28,6 @@ DailyTrends is an API service built with Node.js, TypeScript, MongoDB, Docker, a
 - Node.js (latest LTS version)
 - Docker and Docker Compose
 - MongoDB (if running locally)
-- SuperTest (for integration/API testing)
 
 ### Running the Project
 
