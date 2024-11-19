@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { SERVER_CODES, SERVER_MESSAGES, SERVER_STATUS } from '../apiConstants';
 import { FeedService } from '../../application/services/FeedService';
 import { FeedRepository } from '../../infrastructure/repositories/feed/FeedRepository';
-import { Feed, FeedDTO } from '../../domain/model/Feed';
+import { Feed } from '../../domain/model/Feed';
 import { ElPaisScrapperRepository } from '../../infrastructure/repositories/scrapper/elpais/ElPaisScrapperRepository';
 import { ElMundoScrapperRepository } from '../../infrastructure/repositories/scrapper/elmundo/ElMundoScrapperRepository';
 import { ScrapperRepositoryInterface } from '../../infrastructure/repositories/scrapper/ScrapperRepositoryInterface';
@@ -24,16 +24,15 @@ export const getAllFeeds = async (
     res
       .status(SERVER_CODES.REQUEST_SUCCESSFUL)
       .json({ data: feedData, error: null });
-  } catch (error) {
-    res
-      .status(SERVER_CODES.INTERNAL_SERVER_ERROR)
-      .json({
-        error: {
-          code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
-          message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
-        },
-        data: null,
-      });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({
+      error: {
+        code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
+        message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
+      },
+      data: null,
+    });
   }
 };
 
@@ -43,30 +42,27 @@ export const getFeed = async (req: Request, res: Response): Promise<void> => {
   try {
     const feedData = await feedService.getFeedById(id);
     if (!feedData) {
-      res
-        .status(SERVER_CODES.NOT_FOUND)
-        .json({
-          error: {
-            code: SERVER_STATUS.NOT_FOUND,
-            message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND],
-          },
-          data: null,
-        });
+      res.status(SERVER_CODES.NOT_FOUND).json({
+        error: {
+          code: SERVER_STATUS.NOT_FOUND,
+          message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND],
+        },
+        data: null,
+      });
     } else {
       res
         .status(SERVER_CODES.REQUEST_SUCCESSFUL)
         .json({ data: feedData, error: null });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    res
-      .status(SERVER_CODES.INTERNAL_SERVER_ERROR)
-      .json({
-        error: {
-          code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
-          message: error.reason.toString(),
-        },
-        data: null,
-      });
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({
+      error: {
+        code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
+        message: error.reason.toString(),
+      },
+      data: null,
+    });
   }
 };
 
@@ -92,26 +88,23 @@ export const createFeed = async (
         .status(SERVER_CODES.REQUEST_SUCCESSFUL)
         .json({ data: feedData, error: null });
     } else {
-      res
-        .status(SERVER_CODES.BAD_REQUEST)
-        .json({
-          error: {
-            code: SERVER_STATUS.BAD_REQUEST,
-            message: SERVER_MESSAGES[SERVER_STATUS.BAD_REQUEST],
-          },
-          data: null,
-        });
-    }
-  } catch (error) {
-    res
-      .status(SERVER_CODES.INTERNAL_SERVER_ERROR)
-      .json({
+      res.status(SERVER_CODES.BAD_REQUEST).json({
         error: {
-          code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
-          message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
+          code: SERVER_STATUS.BAD_REQUEST,
+          message: SERVER_MESSAGES[SERVER_STATUS.BAD_REQUEST],
         },
         data: null,
       });
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({
+      error: {
+        code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
+        message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
+      },
+      data: null,
+    });
   }
 };
 
@@ -133,30 +126,27 @@ export const updateFeed = async (
       newsletter,
     });
     if (!feedData) {
-      res
-        .status(SERVER_CODES.NOT_FOUND)
-        .json({
-          error: {
-            code: SERVER_STATUS.NOT_FOUND,
-            message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND],
-          },
-          data: null,
-        });
+      res.status(SERVER_CODES.NOT_FOUND).json({
+        error: {
+          code: SERVER_STATUS.NOT_FOUND,
+          message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND],
+        },
+        data: null,
+      });
     } else {
       res
         .status(SERVER_CODES.REQUEST_SUCCESSFUL)
         .json({ data: feedData, error: null });
     }
-  } catch (error) {
-    res
-      .status(SERVER_CODES.INTERNAL_SERVER_ERROR)
-      .json({
-        error: {
-          code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
-          message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
-        },
-        data: null,
-      });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({
+      error: {
+        code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
+        message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
+      },
+      data: null,
+    });
   }
 };
 
@@ -169,29 +159,26 @@ export const deleteFeed = async (
   try {
     const feedData = await feedService.deleteFeed(id);
     if (!feedData) {
-      res
-        .status(SERVER_CODES.NOT_FOUND)
-        .json({
-          error: {
-            code: SERVER_STATUS.NOT_FOUND,
-            message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND],
-          },
-          data: null,
-        });
+      res.status(SERVER_CODES.NOT_FOUND).json({
+        error: {
+          code: SERVER_STATUS.NOT_FOUND,
+          message: SERVER_MESSAGES[SERVER_STATUS.NOT_FOUND],
+        },
+        data: null,
+      });
     } else {
       res
         .status(SERVER_CODES.DELETED_SUCCESSFULLY)
         .json({ data: SERVER_MESSAGES.DELETED, error: null });
     }
-  } catch (error) {
-    res
-      .status(SERVER_CODES.INTERNAL_SERVER_ERROR)
-      .json({
-        error: {
-          code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
-          message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
-        },
-        data: null,
-      });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    res.status(SERVER_CODES.INTERNAL_SERVER_ERROR).json({
+      error: {
+        code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
+        message: SERVER_MESSAGES[SERVER_STATUS.INTERNAL_SERVER_ERROR],
+      },
+      data: null,
+    });
   }
 };

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express';
 import { SERVER_STATUS } from './api/apiConstants';
 import router from './api/routes';
