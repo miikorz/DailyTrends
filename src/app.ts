@@ -10,14 +10,21 @@ app.use(express.json());
 app.use('/', router);
 
 // Error handling
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  res.status(err.status || 500).json({
-    error: {
-      message: err.message,
-      code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
-    },
-    data: null
-  });
-});
+app.use(
+  (
+    err: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    res.status(err.status || 500).json({
+      error: {
+        message: err.message,
+        code: SERVER_STATUS.INTERNAL_SERVER_ERROR,
+      },
+      data: null,
+    });
+  }
+);
 
 export default app;

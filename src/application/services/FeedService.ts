@@ -3,8 +3,10 @@ import { FeedRepositoryInterface } from '../../infrastructure/repositories/feed/
 import { ScrapperRepositoryInterface } from '../../infrastructure/repositories/scrapper/ScrapperRepositoryInterface';
 import { ScrapperService } from './ScrapperService';
 export class FeedService {
-
-  constructor(private feedRepository: FeedRepositoryInterface, private scrappers: ScrapperRepositoryInterface[]) {}
+  constructor(
+    private feedRepository: FeedRepositoryInterface,
+    private scrappers: ScrapperRepositoryInterface[]
+  ) {}
 
   async getAllFeeds(): Promise<Feed[]> {
     const scrappedFeeds: Feed[] = [];
@@ -16,11 +18,18 @@ export class FeedService {
     }
 
     await this.feedRepository.saveScrappedFeeds(scrappedFeeds);
-    
+
     return await this.feedRepository.findAll();
   }
 
-  async createFeed(feedObject: { title: string; description: string; author: string; link: string; portrait: string | null; newsletter: string }): Promise<Feed> {
+  async createFeed(feedObject: {
+    title: string;
+    description: string;
+    author: string;
+    link: string;
+    portrait: string | null;
+    newsletter: string;
+  }): Promise<Feed> {
     return await this.feedRepository.create(feedObject);
   }
 

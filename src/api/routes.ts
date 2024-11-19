@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { getAllFeeds, getFeed, createFeed, updateFeed, deleteFeed } from './controllers/feedController';
+import {
+  getAllFeeds,
+  getFeed,
+  createFeed,
+  updateFeed,
+  deleteFeed,
+} from './controllers/feedController';
 
 const router = Router();
 

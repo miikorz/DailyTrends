@@ -1,17 +1,17 @@
-import { ElPaisScrapperRepository } from "../infrastructure/repositories/scrapper/elpais/ElPaisScrapperRepository";
-import { Feed } from "../domain/model/Feed";
+import { ElPaisScrapperRepository } from '../infrastructure/repositories/scrapper/elpais/ElPaisScrapperRepository';
+import { Feed } from '../domain/model/Feed';
 
 global.fetch = jest.fn() as jest.Mock;
 
-describe("ElPaisScrapperRepository", () => {
-    let repository: ElPaisScrapperRepository;
+describe('ElPaisScrapperRepository', () => {
+  let repository: ElPaisScrapperRepository;
 
-    beforeEach(() => {
-        repository = new ElPaisScrapperRepository();
-    });
+  beforeEach(() => {
+    repository = new ElPaisScrapperRepository();
+  });
 
-    it("should fetch and parse top news correctly", async () => {
-        const mockHtml = `
+  it('should fetch and parse top news correctly', async () => {
+    const mockHtml = `
             <html>
                 <body>
                     <article>
@@ -32,37 +32,41 @@ describe("ElPaisScrapperRepository", () => {
             </html>
         `;
 
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(new Response(mockHtml));
+    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+      new Response(mockHtml)
+    );
 
-        const news: Feed[] = await repository.getTopNews();
+    const news: Feed[] = await repository.getTopNews();
 
-        expect(news).toHaveLength(2);
+    expect(news).toHaveLength(2);
 
-        expect(news[0]).toEqual({
-            title: "Title 1",
-            description: "Description 1",
-            author: "Author 1",
-            link: "https://www.elpais.com/news/1",
-            portrait: "portrait1.jpg",
-            newsletter: "El País"
-        });
-
-        expect(news[1]).toEqual({
-            title: "Title 2",
-            description: "Description 2",
-            author: "Author 2",
-            link: "https://www.elpais.com/news/2",
-            portrait: "portrait2.jpg",
-            newsletter: "El País"
-        });
+    expect(news[0]).toEqual({
+      title: 'Title 1',
+      description: 'Description 1',
+      author: 'Author 1',
+      link: 'https://www.elpais.com/news/1',
+      portrait: 'portrait1.jpg',
+      newsletter: 'El País',
     });
 
-    it("should handle empty articles", async () => {
-        const mockHtml = `<html><body></body></html>`;
-        (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(new Response(mockHtml));
-
-        const feeds: Feed[] = await repository.getTopNews();
-
-        expect(feeds).toHaveLength(0);
+    expect(news[1]).toEqual({
+      title: 'Title 2',
+      description: 'Description 2',
+      author: 'Author 2',
+      link: 'https://www.elpais.com/news/2',
+      portrait: 'portrait2.jpg',
+      newsletter: 'El País',
     });
+  });
+
+  it('should handle empty articles', async () => {
+    const mockHtml = `<html><body></body></html>`;
+    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(
+      new Response(mockHtml)
+    );
+
+    const feeds: Feed[] = await repository.getTopNews();
+
+    expect(feeds).toHaveLength(0);
+  });
 });
